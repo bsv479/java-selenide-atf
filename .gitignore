@@ -1,6 +1,7 @@
 .gradle
 .idea/
-build/
+build
+allure-results
 
 # Package Files #
 *.jar
