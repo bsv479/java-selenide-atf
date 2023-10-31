@@ -1,19 +1,39 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id "io.qameta.allure" version "2.11.2"
 }
-
-group = 'com.bsv479'
-version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation (
+            "com.codeborne:selenide:6.19.1",
+            "org.junit.jupiter:junit-jupiter:5.9.3",
+            'org.assertj:assertj-core:3.24.2',
+            'io.qameta.allure:allure-selenide:2.24.0'
+    )
 }
 
 test {
     useJUnitPlatform()
+}
+
+allure {
+    report {
+        version.set("2.24.1") //Version of Allure Report (https://github.com/allure-framework/allure2)
+    }
+    adapter {
+        aspectjWeaver.set(true) // Handling annotations @Step
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.24.0") // Version of Allure JUnit5 (https://github.com/allure-framework/allure-java)
+            }
+        }
+    }
 }
